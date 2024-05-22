@@ -1,14 +1,17 @@
 import { ConnectDB } from "@/app/Db";
 import { prismaInstance } from "@/utils/prismaInstance";
+import { Category } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 
 interface ProductProp {
-  productId: string;
+  id: string;
+  title: string;
+  price: number;
+  category: Category;
 }
-
-export const DELETE = async (request: NextRequest) => {
+export const PUT = async (request: NextRequest) => {
   try {
     // Sanitize the incoming data
     const reqBody: ProductProp = await request.json();
@@ -17,9 +20,14 @@ export const DELETE = async (request: NextRequest) => {
     await ConnectDB();
 
     // insert data into the DB
-    await prismaInstance.product.delete({
+    await prismaInstance.product.update({
       where: {
-        id: reqBody.productId,
+        id: reqBody.id,
+      },
+      data: {
+        title: reqBody.title,
+        price: reqBody.price,
+        category: reqBody.category,
       },
     });
 
@@ -27,7 +35,7 @@ export const DELETE = async (request: NextRequest) => {
     return NextResponse.json(
       {
         success: true,
-        message: "product removed successfully",
+        message: "product updated successfully",
       },
       {
         status: 201,
