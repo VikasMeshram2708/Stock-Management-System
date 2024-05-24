@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import { QueryClient, QueryClientProvider } from "react-query";
 import PageWrapper from "./PageWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,10 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="sunset">
-      <body className={inter.className}>
-        <PageWrapper>{children}</PageWrapper>
-      </body>
-    </html>
+      <html lang="en" data-theme="sunset">
+        <body className={inter.className}>
+          <PageWrapper>{children}</PageWrapper>
+        </body>
+      </html>
   );
 }

@@ -1,44 +1,81 @@
 "use client";
 
+import { useProduct } from "@/app/context/ProductState";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useMutation } from "react-query";
 
 export default function ProductForm() {
-  const [productName, setProductName] = useState("");
+  const { AddProductMutation } = useProduct();
+  const [productDetails, setProductDetails] = useState<ProductDetailsProp>({
+    title: "",
+    price: 99,
+    category: "Electronics",
+  });
 
   const handleForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log(productName);
-      setProductName("");
+      await AddProductMutation.mutateAsync(productDetails);
+      console.log(productDetails);
+      setProductDetails({
+        title: "",
+        price: 99,
+        category: "Electronics",
+      });
     } catch (error) {
       console.log(error);
     }
   };
 
-  const formMutate = useMutation({
-    mutationKey: ["addProductForm"],
-    mutationFn: handleForm,
-  });
-
   return (
     <section className="container mx-auto">
       <form
-        onSubmit={formMutate.mutate}
+        onSubmit={handleForm}
         className="p-5 bg-base-300 grid gap-4 rounded"
       >
         <label htmlFor="title" className="label-text text-xl font-semibold">
           Add Product
         </label>
         <input
-          value={productName}
+          value={productDetails.title}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setProductName(e?.target?.value)
+            setProductDetails((prev) => ({
+              ...prev,
+              title: e?.target?.value,
+            }))
           }
           type="text"
           placeholder="enter product"
           className="text-lg rounded-md w-full input input-bordered"
         />
+        <input
+          value={productDetails.price}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setProductDetails((prev) => ({
+              ...prev,
+              price: parseInt(e?.target?.value),
+            }))
+          }
+          type="number"
+          placeholder="enter price"
+          className="text-lg rounded-md w-full input input-bordered"
+        />
+        <select
+          className="cursor-pointer p-2 input input-bordered"
+          value={productDetails.category}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+            setProductDetails((prev) => ({
+              ...prev,
+              category: e?.target?.value,
+            }));
+          }}
+        >
+          <option value="">Select Category</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Books">Books</option>
+          <option value="Food">Food</option>
+          <option value="Furniture">Furniture</option>
+          <option value="Kitchen">Kitchen</option>
+        </select>
         <button type="submit" className="btn btn-outline">
           Add Product
         </button>

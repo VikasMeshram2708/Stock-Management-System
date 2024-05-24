@@ -10,7 +10,7 @@ export const GET = async (request: NextRequest) => {
     await ConnectDB();
 
     // insert data into the DB
-    const allProducts = await prismaInstance.product.findMany();
+    const allProducts = (await prismaInstance.product.findMany()).reverse();
 
     // return the response
     return NextResponse.json(

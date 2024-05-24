@@ -1,4 +1,5 @@
 import ProductForm from "@/components/ProductForm";
+import ProductTable from "@/components/ProductTable";
 import SearchBar from "@/components/SearchBar";
 import Image from "next/image";
 
@@ -14,6 +15,9 @@ export default function Home() {
         <ProductForm />
       </div>
       {/* Products Table */}
+      <div className="mt-10">
+        <ProductTable />
+      </div>
     </main>
   );
 }
