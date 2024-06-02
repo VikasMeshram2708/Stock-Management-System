@@ -8,7 +8,7 @@
 
 - [x] Navbar
 - [x] Product SearchBar
-- [ ] Product Table
+- [x] Product Table
 
 ## API's
 

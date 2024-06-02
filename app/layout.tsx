@@ -14,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="font-Poppins">
-      <body>
+    <html lang="en">
+      <body className="font-Poppins">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
