@@ -7,7 +7,7 @@
 ## Components
 
 - [x] Navbar
-- [ ] Product SearchBar
+- [x] Product SearchBar
 - [ ] Product Table
 
 ## API's
