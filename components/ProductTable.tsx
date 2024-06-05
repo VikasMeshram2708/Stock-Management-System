@@ -31,6 +31,7 @@ export default function ProductTable() {
       );
       console.log(filteredProducts);
       return alert("product deleted");
+      
     } catch (error) {
       console.error(`Something went wrong. Failed to delete the product.`);
     }
