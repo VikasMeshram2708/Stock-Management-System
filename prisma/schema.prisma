@@ -10,7 +10,7 @@ datasource db {
 model Product {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   productName     String   @unique
-  productPrice    Int
+  productPrice    Int      @default(100)
   productCategory String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
