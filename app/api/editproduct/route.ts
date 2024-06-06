@@ -1,4 +1,3 @@
-import { ProductSchema, ProductSchemaType } from "@/models/ProductSchema";
 import { connectDB } from "@/utils/Db";
 import { prismaInstance } from "@/utils/PrismaInstance";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
@@ -24,14 +23,21 @@ export const PUT = async (request: NextRequest) => {
     // connect to DB
     await connectDB();
 
+    // find the item
+    const product = await prismaInstance.product.findUnique({
+      where: {
+        id: id as string,
+      },
+    });
+
     await prismaInstance.product.update({
       where: {
         id: id as string,
       },
       data: {
         productName: name as string,
-        productCategory: category as string,
-        productPrice: +price,
+        productCategory: (category as string) || product?.productCategory,
+        productPrice: +price || product?.productPrice,
       },
     });
 
