@@ -12,28 +12,19 @@ import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
 import { IndianRupee } from "lucide-react";
 import { useState } from "react";
+import { useProduct } from "@/app/Context/ProductState";
 
 export default function ProductTable() {
-  const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
+  // @ts-ignore
+  const { products, deleteProduct } = useProduct();
 
-  const toggleSelectedProducts = (productId: number) => {
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+
+  const toggleSelectedProducts = (productId: string) => {
     if (selectedProducts.includes(productId)) {
       setSelectedProducts(selectedProducts?.filter((id) => id !== productId));
     } else {
       setSelectedProducts([...selectedProducts, productId]);
-    }
-  };
-
-  const handleDelete = (productId: number) => {
-    try {
-      const filteredProducts = Products?.filter(
-        (item) => item?.id === productId
-      );
-      console.log(filteredProducts);
-      return alert("product deleted");
-      
-    } catch (error) {
-      console.error(`Something went wrong. Failed to delete the product.`);
     }
   };
 
@@ -49,7 +40,7 @@ export default function ProductTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Products?.map((item, index) => (
+            {products?.map((item: Product, index: number) => (
               <TableRow key={item?.id}>
                 <TableCell>
                   <div className="flex gap-3">
@@ -57,7 +48,6 @@ export default function ProductTable() {
                     <Checkbox
                       onClick={() => toggleSelectedProducts(item?.id)}
                     />
-                    {/* <Checkbox onClick={() => GetProductDetail(item?.id)} /> */}
                   </div>
                 </TableCell>
                 <TableCell>
@@ -78,7 +68,7 @@ export default function ProductTable() {
                       <Button>Edit</Button>
                       <Button
                         variant="destructive"
-                        onClick={() => handleDelete(item?.id)}
+                        onClick={() => deleteProduct(item?.id as string)}
                       >
                         Delete
                       </Button>
