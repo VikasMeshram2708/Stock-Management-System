@@ -27,7 +27,7 @@ export const ProductState = ({ children }: { children: ReactNode }) => {
       }
       alert("product has been added to table.");
       new Promise((resolve) => {
-        setTimeout(() => {
+        return setTimeout(() => {
           resolve(window.location.reload());
         }, 2000);
       });

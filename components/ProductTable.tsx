@@ -62,7 +62,7 @@ export default function ProductTable() {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <h1>{item?.productCategory}</h1>
+                  <h1 className="capitalize">{item?.productCategory}</h1>
                   {selectedProducts?.includes(item?.id) && (
                     <div className="mt-3 flex gap-3">
                       <Button>Edit</Button>
