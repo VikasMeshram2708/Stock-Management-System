@@ -18,7 +18,7 @@ export default function Navbar() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   return (
-    <nav className="border-b p-4 flex items-center justify-between">
+    <nav className="sticky top-0 z-40 bg-slate-950 container mx-auto border-b p-4 flex items-center justify-between">
       <h1 className="text-3xl font-bold">
         <Link href="/">Stock Management System</Link>
       </h1>
