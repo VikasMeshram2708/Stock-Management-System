@@ -1,7 +1,10 @@
+import ProductSearchBar from "@/components/ProductSearchBar";
+
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <h1>hello,world!</h1>
+      {/* SearchBar */}
+      <ProductSearchBar />
     </main>
   );
 }
