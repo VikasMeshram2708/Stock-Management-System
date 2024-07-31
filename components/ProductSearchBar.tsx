@@ -8,8 +8,8 @@ export default function ProductSearchBar() {
 
   return (
     <section className="container mx-auto">
-      <form action="">
-        <h2 className="text-sm font-semibold mb-3">Enter Product Name</h2>
+      <form action="" className="mt-10">
+        <h2 className="text-lg font-semibold mb-3">Search Product</h2>
         <Input
           value={productName}
           onChange={(e) => setProductName(e?.target?.value)}
