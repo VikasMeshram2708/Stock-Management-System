@@ -1,5 +1,6 @@
 import { UpdateProductSchema } from "@/app/models/ProductSchema";
 import { ConnectDB } from "@/lib/Db";
+import { GetDataFromToken } from "@/lib/GetDataFromToken";
 import { PrismaInstance } from "@/lib/PrismaInstance";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,6 +9,19 @@ import { ZodError } from "zod";
 export const PUT = async (request: NextRequest) => {
   try {
     const reqBody: UpdateProductSchema = await request.json();
+
+    // token validation
+    const tokenData = await GetDataFromToken(request);
+    if (!tokenData) {
+      return NextResponse.json(
+        {
+          message: "Invalid Token",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
 
     // Sanitize the incoming data
     const productData = UpdateProductSchema.parse({
@@ -52,8 +66,7 @@ export const PUT = async (request: NextRequest) => {
       },
     });
 
-    // return the response
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         message: "Product Updated",
       },
@@ -61,6 +74,8 @@ export const PUT = async (request: NextRequest) => {
         status: 201,
       }
     );
+
+    return response;
   } catch (error) {
     const err = error as Error;
     if (err instanceof ZodError) {

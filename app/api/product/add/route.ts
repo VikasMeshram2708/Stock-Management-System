@@ -1,5 +1,6 @@
 import { ProductSchema } from "@/app/models/ProductSchema";
 import { ConnectDB } from "@/lib/Db";
+import { GetDataFromToken } from "@/lib/GetDataFromToken";
 import { PrismaInstance } from "@/lib/PrismaInstance";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,6 +9,19 @@ import { ZodError } from "zod";
 export const POST = async (request: NextRequest) => {
   try {
     const reqBody: ProductSchema = await request.json();
+    
+    // token validation
+    const tokenData = await GetDataFromToken(request);
+    if (!tokenData) {
+      return NextResponse.json(
+        {
+          message: "Invalid Token",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
 
     // Sanitize the incoming data
 
@@ -17,7 +31,7 @@ export const POST = async (request: NextRequest) => {
       price: reqBody?.price,
       category: reqBody?.category,
     });
-    
+
     const userId = "0be1cd22-980d-4563-98fc-a021a29009e0";
 
     // Connect to DB

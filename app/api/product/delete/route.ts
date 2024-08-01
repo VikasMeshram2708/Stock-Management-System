@@ -1,4 +1,5 @@
 import { ConnectDB } from "@/lib/Db";
+import { GetDataFromToken } from "@/lib/GetDataFromToken";
 import { PrismaInstance } from "@/lib/PrismaInstance";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { NextRequest, NextResponse } from "next/server";
@@ -11,6 +12,19 @@ interface DeleteProps {
 export const DELETE = async (request: NextRequest) => {
   try {
     const reqBody: DeleteProps = await request.json();
+
+    // token validation
+    const tokenData = await GetDataFromToken(request);
+    if (!tokenData) {
+      return NextResponse.json(
+        {
+          message: "Invalid Token",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
 
     // connect to DB
     await ConnectDB();
@@ -36,9 +50,9 @@ export const DELETE = async (request: NextRequest) => {
     // Query the DB
     await PrismaInstance.product.delete({
       where: {
-        id: reqBody?.productId
-      }
-    })
+        id: reqBody?.productId,
+      },
+    });
     // Return the Response
     return NextResponse.json(
       {
