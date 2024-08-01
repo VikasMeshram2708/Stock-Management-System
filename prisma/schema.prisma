@@ -8,22 +8,26 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  username   String   @unique @db.VarChar(40)
-  email      String   @unique
-  password   String   @db.VarChar(120)
-  role       String   @default("USER")
-  isVerified Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id         String    @id @default(uuid())
+  username   String    @unique @db.VarChar(40)
+  email      String    @unique
+  password   String    @db.VarChar(120)
+  role       String    @default("USER")
+  isVerified Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Product    Product[]
 }
 
 model Product {
-  id          String   @id @default(uuid())
-  name        String   @unique @db.VarChar(40)
+  id          String @id @default(uuid())
+  name        String @unique @db.VarChar(40)
   price       Int
-  description String   @db.VarChar(120)
-  category    String   @db.VarChar(40)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  description String @db.VarChar(120)
+  category    String @db.VarChar(40)
+  User        User   @relation(fields: [UserId], references: [id])
+  UserId      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
