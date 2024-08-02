@@ -1,10 +1,7 @@
-import { UseQueryResult } from "@tanstack/react-query";
 import { createContext } from "react";
+import { Product } from "@prisma/client";
 
 interface ContextProps {
-  data: {
-    name: string;
-  };
-  // productQuery: UseQueryResult<void, Error>
+  products: Product[];
 }
 export const ProductContext = createContext<ContextProps | null>(null);

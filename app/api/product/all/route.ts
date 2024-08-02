@@ -6,19 +6,6 @@ import { ZodError } from "zod";
 
 export const GET = async (request: NextRequest) => {
   try {
-    // token validation
-    const tokenData = await GetDataFromToken(request);
-    if (!tokenData) {
-      return NextResponse.json(
-        {
-          message: "Invalid Token",
-        },
-        {
-          status: 400,
-        }
-      );
-    }
-
     const products = (await PrismaInstance.product.findMany()).reverse();
     return NextResponse.json(
       {

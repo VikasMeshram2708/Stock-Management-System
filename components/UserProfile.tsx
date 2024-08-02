@@ -17,7 +17,6 @@ import { cookies } from "next/headers";
 
 export default async function UserProfile() {
   const cookieValue: any = await getCookie();
-  console.log("c", cookieValue);
 
   return (
     <DropdownMenu>

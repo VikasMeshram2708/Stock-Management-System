@@ -11,7 +11,8 @@ export const POST = async (request: NextRequest) => {
     const reqBody: ProductSchema = await request.json();
     
     // token validation
-    const tokenData = await GetDataFromToken(request);
+    const tokenData:any = await GetDataFromToken(request);
+
     if (!tokenData) {
       return NextResponse.json(
         {
@@ -32,10 +33,10 @@ export const POST = async (request: NextRequest) => {
       category: reqBody?.category,
     });
 
-    const userId = "0be1cd22-980d-4563-98fc-a021a29009e0";
-
     // Connect to DB
     await ConnectDB();
+
+    // const userId = "0be1cd22-980d-4563-98fc-a021a29009e0";
 
     // Query the DB
     await PrismaInstance.product.create({
@@ -46,7 +47,7 @@ export const POST = async (request: NextRequest) => {
         category: productData?.category,
         User: {
           connect: {
-            id: userId,
+            id: tokenData.id,
           },
         },
       },
