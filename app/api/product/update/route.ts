@@ -12,6 +12,7 @@ export const PUT = async (request: NextRequest) => {
 
     // token validation
     const tokenData = await GetDataFromToken(request);
+    console.log('tok-data', tokenData);
     if (!tokenData) {
       return NextResponse.json(
         {
