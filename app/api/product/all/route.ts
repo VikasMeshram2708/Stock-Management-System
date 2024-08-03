@@ -6,7 +6,22 @@ import { ZodError } from "zod";
 
 export const GET = async (request: NextRequest) => {
   try {
-    const products = (await PrismaInstance.product.findMany()).reverse();
+    const userData: any = await GetDataFromToken(request);
+    // console.log('ud', userData);
+
+    const userProducts = await PrismaInstance.user.findFirst({
+      where: {
+        id: userData?.id,
+      },
+      select: {
+        Product: true,
+      },
+    });
+
+    // console.log("pd", userProducts);
+
+    const products = userProducts?.Product.reverse();
+
     return NextResponse.json(
       {
         products,

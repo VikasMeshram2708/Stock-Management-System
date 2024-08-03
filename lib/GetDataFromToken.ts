@@ -10,6 +10,6 @@ export async function GetDataFromToken(request: NextRequest) {
 
     return decodedToken;
   } catch (error) {
-    throw new Error();
+    console.log('Invalid Token',error)
   }
 }

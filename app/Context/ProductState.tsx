@@ -14,7 +14,7 @@ export default function ProductState({ children }: ProductStateProps) {
     try {
       const res = await fetch("/api/product/all");
       const result = await res.json();
-      console.log("resu", result?.products);
+      // console.log("resu", result?.products);
       setProducts(result?.products)
       return result?.products;
     } catch (error) {
