@@ -65,7 +65,7 @@ export const POST = async (request: NextRequest) => {
 
     // JWT
     const tokenData = jwt.sign(payload, process.env.JWT_SECRET!, {
-      expiresIn: "1h",
+      expiresIn: 60 * 60,
     });
 
     console.log("token", tokenData);
